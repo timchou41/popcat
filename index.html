@@ -76,5 +76,29 @@
                 <div class="cat-img" id="p">0</div>
             </div>
         </div>
+
+        <script>
+            let count = 0;
+            const countElement = document.getElementById("p");
+
+            function openCat() {
+                countElement.id = "op";
+            }
+
+            function closeCat() {
+                countElement.id = "p";
+            }
+
+            function incrementCount() {
+                count += 1;
+                countElement.textContent = count;
+                console.log(count);
+            }
+
+            countElement.addEventListener("mousedown", openCat);
+            countElement.addEventListener("mouseup", closeCat);
+            countElement.addEventListener("mouseleave", closeCat);
+            countElement.addEventListener("click", incrementCount);
+        </script>
     </body>
 </html>
