@@ -80,9 +80,12 @@
         <script>
             let count = 0;
             const countElement = document.getElementById("p");
+            const popSound = new Audio("pops/pop1.mp3");
 
             function openCat() {
                 countElement.id = "op";
+                popSound.currentTime = 0;
+                popSound.play();
             }
 
             function closeCat() {
@@ -95,10 +98,35 @@
                 console.log(count);
             }
 
+            function isInteractionKey(event) {
+                return event.code === "Space" || event.key === "Enter";
+            }
+
+            function handleKeyDown(event) {
+                if (!isInteractionKey(event) || event.repeat) {
+                    return;
+                }
+                event.preventDefault();
+                openCat();
+                incrementCount();
+            }
+
+            function handleKeyUp(event) {
+                if (!isInteractionKey(event)) {
+                    return;
+                }
+                event.preventDefault();
+                setTimeout(closeCat, 25);
+            }
+
             countElement.addEventListener("mousedown", openCat);
-            countElement.addEventListener("mouseup", closeCat);
+            countElement.addEventListener("mouseup", () => {
+                setTimeout(closeCat, 25);
+            });
             countElement.addEventListener("mouseleave", closeCat);
             countElement.addEventListener("click", incrementCount);
+            window.addEventListener("keydown", handleKeyDown);
+            window.addEventListener("keyup", handleKeyUp);
         </script>
     </body>
 </html>
